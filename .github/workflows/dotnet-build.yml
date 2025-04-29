@@ -21,7 +21,7 @@ jobs:
       - name: Instala o .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.14' # Instalação SDK - action pré-existente repositório oficial
+          dotnet-version: '8.0.x' # Instalação SDK - action pré-existente repositório oficial -  versão mais recente disponível da série 8.0
 
       - name: Restaura dependências
         run: dotnet restore
