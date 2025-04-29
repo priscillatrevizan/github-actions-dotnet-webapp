@@ -1,0 +1,33 @@
+name: Build .NET Project
+
+on:
+  push:
+    branches:
+      - main
+      - development
+  schedule:
+    - cron: '0 * * * *' # Executa a cada hora, no minuto 0
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read # recomendável na action pré-existente: acesso para verificar o código e instalar dependências 
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4 # checkout - action pré-existente repositório oficial
+
+      - name: Instala o .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x' # Instalação SDK - action pré-existente repositório oficial -  versão mais recente disponível da série 8.0
+
+      - name: Restaura dependências
+        run: dotnet restore
+
+      - name: Compila o projeto
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Executa os testes
+        run: dotnet test --no-build --verbosity normal
